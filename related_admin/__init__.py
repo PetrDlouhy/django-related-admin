@@ -46,8 +46,8 @@ class RelatedFieldAdmin(with_metaclass(RelatedFieldAdminMetaclass,admin.ModelAdm
         Version of ModelAdmin that can use related fields in list_display, e.g.:
         list_display = ('address__city', 'address__country__country_code')
     """
-    def queryset(self, request):
-        qs = super(RelatedFieldAdmin, self).queryset(request)
+    def get_queryset(self, request):
+        qs = super(RelatedFieldAdmin, self).get_queryset(request)
 
         # include all related fields in queryset
         select_related = [field.rsplit('__',1)[0] for field in self.list_display if '__' in field]
