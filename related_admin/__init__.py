@@ -13,19 +13,20 @@ from django.db import models
 
 
 def getter_for_related_field(name, admin_order_field=None, short_description=None):
-    
     """
         Create a function that can be attached to a ModelAdmin to use as a list_display field, e.g:
         client__name = getter_for_related_field('client__name', short_description='Client')
     """
     related_names = name.split('__')
+
     def getter(self, obj):
         for related_name in related_names:
             obj = getattr(obj, related_name, None)
         return obj
     getter.admin_order_field = admin_order_field or name
-    getter.short_description = short_description or related_names[-1].title().replace('_',' ')
+    getter.short_description = short_description or related_names[-1].title().replace('_', ' ')
     return getter
+
 
 class RelatedFieldAdminMetaclass(type(admin.ModelAdmin)):
     """
@@ -41,7 +42,8 @@ class RelatedFieldAdminMetaclass(type(admin.ModelAdmin)):
 
         return new_class
 
-class RelatedFieldAdmin(with_metaclass(RelatedFieldAdminMetaclass,admin.ModelAdmin)):
+
+class RelatedFieldAdmin(with_metaclass(RelatedFieldAdminMetaclass, admin.ModelAdmin)):
     """
         Version of ModelAdmin that can use related fields in list_display, e.g.:
         list_display = ('address__city', 'address__country__country_code')
@@ -50,7 +52,7 @@ class RelatedFieldAdmin(with_metaclass(RelatedFieldAdminMetaclass,admin.ModelAdm
         qs = super(RelatedFieldAdmin, self).get_queryset(request)
 
         # include all related fields in queryset
-        select_related = [field.rsplit('__',1)[0] for field in self.list_display if '__' in field]
+        select_related = [field.rsplit('__', 1)[0] for field in self.list_display if '__' in field]
 
         # Include all foreign key fields in queryset.
         # This is based on ChangeList.get_query_set().
