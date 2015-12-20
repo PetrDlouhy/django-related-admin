@@ -1,0 +1,38 @@
+[
+    {
+        "fields": {
+            "first_name": "Mark",
+            "instrument": "guitair",
+            "last_name": "Knopfler"
+        },
+        "model": "main.musician",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "artist": 1,
+            "name": "Dire Straits",
+            "release_date": "1978-10-07"
+        },
+        "model": "main.album",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "date_joined": "2015-11-12T18:16:03.886-00:00",
+            "email": "admin@admin.com",
+            "first_name": "",
+            "groups": [],
+            "is_active": true,
+            "is_staff": true,
+            "is_superuser": true,
+            "last_login": "2015-11-12T18:35:38.186-00:00",
+            "last_name": "",
+            "password": "pbkdf2_sha256$20000$9BslzSdAyhcU$eoFApz9/jPK2ECnE7Ssep3m0v3CIQ8mWC7uhEiqyzE0=",
+            "user_permissions": [],
+            "username": "admin"
+        },
+        "model": "auth.user",
+        "pk": 1
+    }
+]

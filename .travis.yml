@@ -1,0 +1,39 @@
+sudo: false
+
+language: python
+
+python:
+  - "2.7"
+  - "3.4"
+
+env:
+  - DJANGO_VERSION=django18
+  - DJANGO_VERSION=django19
+  - DJANGO_VERSION=djangodev
+
+matrix:
+  allow_failures:
+    - env: DJANGO_VERSION=djangodev
+  include:
+    - python: "2.7"
+      env: MODE=flake8
+
+cache:
+  directories:
+    - $HOME/.cache/pip
+
+before_cache:
+  - rm -f $HOME/.cache/pip/log/debug.log
+
+# command to install dependencies
+install:
+    - python setup.py install
+    - pip install tox coveralls
+
+after_success:
+    - coveralls
+
+# command to run tests
+script:
+    - coverage erase
+    - tox -e py${TRAVIS_PYTHON_VERSION/./}-${DJANGO_VERSION}${MODE}
