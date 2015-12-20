@@ -4,13 +4,10 @@ django-related-admin
 
 Allow foreign key attributes in list_display with '__'
 
-This is based on (DjangoSnippet 2996)[https://djangosnippets.org/snippets/2996/] which was made by Kpacn.
+This is based on `DjangoSnippet 2996 <https://djangosnippets.org/snippets/2996/>`_ which was made by Kpacn.
 
 Installation
 ------------
-
-Installation
------------
 
 1. This library is on PyPI so you can install it with::
 
@@ -20,7 +17,7 @@ or from github::
 
     pip install git+https://github.com/PetrDlouhy/django-related-admin#egg=django-related-admin
 
-2. Add "polls" to your INSTALLED_APPS setting like this::
+2. Add "related_admin" to your INSTALLED_APPS setting like this::
 
     INSTALLED_APPS = (
         ...
@@ -29,6 +26,8 @@ or from github::
 
 Usage
 -----
+
+Just use it instead of model.Admin::
 
    from related_admin import RelatedFieldAdmin
 
