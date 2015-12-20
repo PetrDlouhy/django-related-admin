@@ -14,6 +14,7 @@ setup(
     description="Allow foreign key attributes in list_display with '__'",
     long_description=README,
     url='https://github.com/PetrDlouhy/django-related-admin',
+    install_requires=['six'],
     author='kpacn',
     author_email='',
     classifiers=[
