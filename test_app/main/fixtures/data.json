@@ -10,12 +10,39 @@
     },
     {
         "fields": {
+            "first_name": "Prince",
+            "instrument": "voice",
+            "last_name": null
+        },
+        "model": "main.musician",
+        "pk": 2
+    },
+    {
+        "fields": {
             "artist": 1,
             "name": "Dire Straits",
             "release_date": "1978-10-07"
         },
         "model": "main.album",
         "pk": 1
+    },
+    {
+        "fields": {
+            "artist": null,
+            "name": "Blank album",
+            "release_date": "2016-01-10"
+        },
+        "model": "main.album",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "artist": 2,
+            "name": "Prince album",
+            "release_date": "2016-01-10"
+        },
+        "model": "main.album",
+        "pk": 3
     },
     {
         "fields": {

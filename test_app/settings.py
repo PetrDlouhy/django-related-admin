@@ -28,7 +28,9 @@ TEMPLATES = [
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
-            # ... some options here ...
+            'context_processors': {
+                'django.contrib.auth.context_processors.auth',
+            }
         },
     },
 ]
