@@ -27,7 +27,6 @@ before_cache:
 
 # command to install dependencies
 install:
-    - python setup.py install
     - pip install tox coveralls
 
 after_success:
