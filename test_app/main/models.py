@@ -15,3 +15,8 @@ class Album(models.Model):
     artist = models.ForeignKey(Musician, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=100)
     release_date = models.DateField()
+
+
+class Concert(models.Model):
+    name = models.CharField(max_length=100)
+    main_performer = models.ForeignKey(Musician, on_delete=models.CASCADE)
