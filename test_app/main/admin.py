@@ -14,6 +14,7 @@ class AlbumAdmin(RelatedFieldAdmin):
 class MusicianAdmin(admin.ModelAdmin):
     list_display = ('first_name', 'last_name')
 
+
 class ConcertAdmin(RelatedFieldAdmin):
     list_display = ('name', 'main_performer_link')
     list_select_related = ('main_performer',)
