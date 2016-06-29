@@ -46,6 +46,14 @@
     },
     {
         "fields": {
+            "main_performer": 1,
+            "name": "First concert"
+        },
+        "model": "main.concert",
+        "pk": 1
+    },
+    {
+        "fields": {
             "date_joined": "2015-11-12T18:16:03.886-00:00",
             "email": "admin@admin.com",
             "first_name": "",

@@ -57,6 +57,11 @@ class RelatedFieldAdmin(with_metaclass(RelatedFieldAdminMetaclass, admin.ModelAd
         # include all related fields in queryset
         select_related = [field.rsplit('__', 1)[0] for field in self.list_display if '__' in field]
 
+        # explicitly add contents of self.list_select_related to select_related
+        if self.list_select_related:
+            for field in self.list_select_related:
+                select_related.append(field)
+
         # Include all foreign key fields in queryset.
         # This is based on ChangeList.get_query_set().
         # We have to duplicate it here because select_related() only works once.
