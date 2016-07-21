@@ -1,6 +1,12 @@
 ====================
 django-related-admin
 ====================
+.. image:: https://travis-ci.org/PetrDlouhy/django-related-admin.svg?branch=master
+    :target: https://travis-ci.org/PetrDlouhy/django-related-admin
+.. image:: https://coveralls.io/repos/github/PetrDlouhy/django-related-admin/badge.svg?branch=master
+	 :target: https://coveralls.io/github/PetrDlouhy/django-related-admin?branch=master
+.. image:: https://badge.fury.io/py/django-related-admin.svg
+    :target: https://badge.fury.io/py/django-related-admin
 
 Allow foreign key attributes in list_display with '__'
 
