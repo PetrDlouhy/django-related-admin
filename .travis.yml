@@ -17,7 +17,7 @@ matrix:
   allow_failures:
     - env: DJANGO_VERSION=djangodev
   include:
-    - python: "2.7"
+    - python: "3.5"
       env: MODE=flake8
 
 cache:
