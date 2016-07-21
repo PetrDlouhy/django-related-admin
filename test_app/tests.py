@@ -1,5 +1,8 @@
 from django.test import TestCase, RequestFactory
-from django.core.urlresolvers import reverse
+try:
+    from django.urls import reverse
+except ImportError:  # for Django<1.10
+    from django.core.urlresolvers import reverse
 
 
 class AdminFilterTests(TestCase):
