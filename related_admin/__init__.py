@@ -72,7 +72,11 @@ class RelatedFieldAdmin(with_metaclass(RelatedFieldAdminMetaclass, admin.ModelAd
                 field = model._meta.get_field(field_name)
             except models.FieldDoesNotExist:
                 continue
-            if isinstance(field.rel, models.ManyToOneRel):
+            try:
+                remote_field = field.remote_field
+            except AttributeError:  # for Django<1.9
+                remote_field = field.rel
+            if isinstance(remote_field, models.ManyToOneRel):
                 select_related.append(field_name)
 
         return qs.select_related(*select_related)

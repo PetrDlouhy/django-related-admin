@@ -1,10 +1,17 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib import admin
+from django.utils.html import format_html
 from .models import Album, Musician, Concert
 from related_admin import RelatedFieldAdmin
-from django.core.urlresolvers import reverse
-from cgi import escape
+try:
+    from django.urls import reverse
+except:  # for Django<1.9
+    from django.core.urlresolvers import reverse
+try:
+    from html import escape
+except:  # for Python < 3.0
+    from cgi import escape
 
 
 class AlbumAdmin(RelatedFieldAdmin):
@@ -21,8 +28,7 @@ class ConcertAdmin(RelatedFieldAdmin):
 
     def main_performer_link(self, obj):
         url = reverse("admin:main_musician_change", args=[obj.main_performer.id])
-        return '<a href="%s">%s</a>' % (url, escape(str(obj)))
-    main_performer_link.allow_tags = True
+        return format_html('<a href="%s">{}</a>', (url, escape(str(obj))))
     main_performer_link.short_description = "Main performer"
 
 admin.site.register(Album, AlbumAdmin)

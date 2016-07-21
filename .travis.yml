@@ -5,10 +5,12 @@ language: python
 python:
   - "2.7"
   - "3.4"
+  - "3.5"
 
 env:
   - DJANGO_VERSION=django18
   - DJANGO_VERSION=django19
+  - DJANGO_VERSION=django110
   - DJANGO_VERSION=djangodev
 
 matrix:

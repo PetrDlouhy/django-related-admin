@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='album',
             name='artist',
-            field=models.ForeignKey(blank=True, to='main.Musician', null=True),
+            field=models.ForeignKey(blank=True, to='main.Musician', on_delete=models.CASCADE, null=True),
         ),
         migrations.AlterField(
             model_name='musician',
@@ -31,6 +31,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='concert',
             name='main_performer',
-            field=models.ForeignKey(to='main.Musician'),
+            field=models.ForeignKey(to='main.Musician', on_delete=models.CASCADE),
         ),
     ]
