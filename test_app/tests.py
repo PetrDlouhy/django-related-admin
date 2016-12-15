@@ -1,5 +1,5 @@
-from django.test import RequestFactory, TestCase
 from django.contrib.admin.templatetags.admin_list import _boolean_icon
+from django.test import RequestFactory, TestCase
 try:
     from django.urls import reverse
 except ImportError:  # for Django<1.10

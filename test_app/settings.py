@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
 import django
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -32,7 +33,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': {
                 'django.contrib.auth.context_processors.auth',
-            }
+            },
         },
     },
 ]
@@ -78,7 +79,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    },
 }
 
 # Internationalization

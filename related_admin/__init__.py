@@ -7,9 +7,11 @@ for Django 1.5 where __metaclass__ is deprecated
 """
 
 from __future__ import absolute_import
-from six import with_metaclass
+
 from django.contrib import admin
 from django.db import models
+
+from six import with_metaclass
 
 
 def getter_for_related_field(name, admin_order_field=None, short_description=None, boolean=None):
