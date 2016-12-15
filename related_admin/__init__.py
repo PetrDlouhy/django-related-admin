@@ -12,7 +12,7 @@ from django.contrib import admin
 from django.db import models
 
 
-def getter_for_related_field(name, admin_order_field=None, short_description=None):
+def getter_for_related_field(name, admin_order_field=None, short_description=None, boolean=None):
     """
         Create a function that can be attached to a ModelAdmin to use as a list_display field, e.g:
         client__name = getter_for_related_field('client__name', short_description='Client')
@@ -28,6 +28,7 @@ def getter_for_related_field(name, admin_order_field=None, short_description=Non
         if callable(obj):
             obj = obj()
         return obj
+    getter.boolean = boolean
     getter.admin_order_field = admin_order_field or name
     getter.short_description = short_description or related_names[-1].title().replace('_', ' ')
     return getter

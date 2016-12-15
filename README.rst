@@ -41,6 +41,6 @@ Just use it instead of model.Admin::
        # these fields will work automatically:
        list_display = ('address__phone','address__country__country_code','address__foo')
 
-       # ... but you can also define them manually if you need to override short_description:
-       address__foo = getter_for_related_field('address__foo', short_description='Custom Name')
+       # ... but you can also define them manually if you need to override short_description or boolean parameter:
+       address__foo = getter_for_related_field('address__foo', short_description='Custom Name', boolean=True)
 
