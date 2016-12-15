@@ -25,6 +25,8 @@ def getter_for_related_field(name, admin_order_field=None, short_description=Non
                 obj = getattr(obj, "get_%s_display" % related_name)()
             except AttributeError:
                 obj = getattr(obj, related_name, None)
+        if callable(obj):
+            obj = obj()
         return obj
     getter.admin_order_field = admin_order_field or name
     getter.short_description = short_description or related_names[-1].title().replace('_', ' ')

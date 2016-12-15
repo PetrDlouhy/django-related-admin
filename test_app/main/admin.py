@@ -15,7 +15,7 @@ except:  # for Python < 3.0
 
 
 class AlbumAdmin(RelatedFieldAdmin):
-    list_display = ('name', 'artist__first_name', 'artist__last_name')
+    list_display = ('name', 'artist__first_name', 'artist__last_name', 'artist__full_name')
 
 
 class MusicianAdmin(admin.ModelAdmin):
