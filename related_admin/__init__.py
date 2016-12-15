@@ -42,7 +42,7 @@ class RelatedFieldAdminMetaclass(type(admin.ModelAdmin)):
         new_class = super(RelatedFieldAdminMetaclass, cls).__new__(cls, name, bases, attrs)
 
         for field in new_class.list_display:
-            if '__' in field[1:-1]:
+            if '__' in field[1:-1] and not hasattr(new_class, field):
                 setattr(new_class, field, getter_for_related_field(field))
 
         return new_class
