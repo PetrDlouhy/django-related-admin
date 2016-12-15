@@ -16,7 +16,7 @@ from .models import Album, Concert, Musician
 
 
 class AlbumAdmin(RelatedFieldAdmin):
-    list_display = ('name', 'artist__first_name', 'artist__last_name', 'artist__full_name', 'artist__active')
+    list_display = ('name', 'artist', 'artist__first_name', 'artist__last_name', 'artist__full_name', 'artist__active')
 
     artist__active = getter_for_related_field('artist__active', boolean=True)
 
