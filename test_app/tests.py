@@ -1,4 +1,5 @@
-from django.test import TestCase, RequestFactory
+from django.test import RequestFactory, TestCase
+from django.contrib.admin.templatetags.admin_list import _boolean_icon
 try:
     from django.urls import reverse
 except ImportError:  # for Django<1.10
@@ -17,7 +18,7 @@ class AdminFilterTests(TestCase):
         response = self.client.get(reverse("admin:main_album_changelist"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, '<td class="field-artist__full_name">Mark Knopfler</td>', html=True)
-        self.assertContains(response, '<td class="field-artist__active"><img src="/static/admin/img/icon-yes.svg" alt="True"></td>', html=True)
+        self.assertContains(response, '<td class="field-artist__active">%s</td>' % _boolean_icon(True), html=True)
 
     def test_admin_views_list_select_related_competition(self):
         self.assertTrue(self.client.login(username='admin', password='admin'))
