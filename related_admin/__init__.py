@@ -17,12 +17,12 @@ from six import with_metaclass
 def is_field_allowed(name):
     """
         Check is field name is eligible for being split.
-        
+
         For example, '__str__' is not, but 'related__field' is.
     """
     return not name.startswith('__') and not name.endswith('__') and '__' in name
 
-    
+
 def getter_for_related_field(name, admin_order_field=None, short_description=None, boolean=None):
     """
         Create a function that can be attached to a ModelAdmin to use as a list_display field, e.g:
