@@ -36,6 +36,7 @@ Usage
 Just use it instead of model.Admin::
 
    from related_admin import RelatedFieldAdmin
+   from related_admin import getter_for_related_field
 
    class FooAdmin(RelatedFieldAdmin):
        # these fields will work automatically:
