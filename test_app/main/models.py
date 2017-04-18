@@ -14,6 +14,9 @@ class Musician(models.Model):
     def __str__(self):
         return self.full_name()
 
+    def is_on_tour(self):
+        return self.active
+
 
 class Album(models.Model):
     artist = models.ForeignKey(Musician, on_delete=models.CASCADE, null=True, blank=True)

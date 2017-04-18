@@ -9,9 +9,12 @@ for Django 1.5 where __metaclass__ is deprecated
 from __future__ import absolute_import
 
 from django.contrib import admin
+from django.contrib.admin.utils import lookup_field
 from django.db import models
 
 from six import with_metaclass
+
+from .compat import display_for_field, get_empty_value_display
 
 
 def is_field_allowed(name):
@@ -31,13 +34,22 @@ def getter_for_related_field(name, admin_order_field=None, short_description=Non
     related_names = name.split('__')
 
     def getter(self, obj):
+        last_obj = obj
+        related_name = None
+
         for related_name in related_names:
+            last_obj = obj
             try:
                 obj = getattr(obj, "get_%s_display" % related_name)()
             except AttributeError:
                 obj = getattr(obj, related_name, None)
         if callable(obj):
             obj = obj()
+        elif isinstance(last_obj, models.Model):
+            f, attr, value = lookup_field(related_name, last_obj, self)
+            empty_value_display = get_empty_value_display(self)
+            empty_value_display = getattr(attr, 'empty_value_display', empty_value_display)
+            obj = display_for_field(obj, f, empty_value_display)
         return obj
     getter.boolean = boolean
     getter.admin_order_field = admin_order_field or name
