@@ -18,16 +18,16 @@ from .models import Album, Concert, Musician
 class AlbumAdmin(RelatedFieldAdmin):
     list_display = ('name', 'artist', 'artist__first_name', 'artist__last_name', 'artist__full_name', 'artist__active', '__str__')
 
-    artist__active = getter_for_related_field('artist__active', boolean=True)
-
 
 class MusicianAdmin(admin.ModelAdmin):
     list_display = ('first_name', 'last_name')
 
 
 class ConcertAdmin(RelatedFieldAdmin):
-    list_display = ('name', 'main_performer_link')
+    list_display = ('name', 'main_performer_link', 'main_performer__is_on_tour')
     list_select_related = ('main_performer',)
+
+    main_performer__is_on_tour = getter_for_related_field('main_performer__is_on_tour', boolean=True)
 
     def main_performer_link(self, obj):
         url = reverse("admin:main_musician_change", args=[obj.main_performer.id])

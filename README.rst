@@ -39,7 +39,7 @@ Just use it instead of model.Admin::
    from related_admin import getter_for_related_field
 
    class FooAdmin(RelatedFieldAdmin):
-       # these fields will work automatically:
+       # these fields will work automatically (and boolean fields will display an icon):
        list_display = ('address__phone','address__country__country_code','address__foo')
 
        # ... but you can also define them manually if you need to override short_description or boolean parameter:

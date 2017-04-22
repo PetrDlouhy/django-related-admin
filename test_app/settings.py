@@ -65,6 +65,9 @@ MIDDLEWARE = (
 
 if django.VERSION < (1, 10):
     MIDDLEWARE_CLASSES = MIDDLEWARE
+else:
+    session_auth_middleware = 'django.contrib.auth.middleware.SessionAuthenticationMiddleware'
+    MIDDLEWARE = tuple(m for m in MIDDLEWARE if m != session_auth_middleware)
 
 
 ROOT_URLCONF = 'test_app.urls'

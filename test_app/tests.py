@@ -23,4 +23,5 @@ class AdminFilterTests(TestCase):
     def test_admin_views_list_select_related_competition(self):
         self.assertTrue(self.client.login(username='admin', password='admin'))
         response = self.client.get(reverse("admin:main_concert_changelist"))
+        self.assertContains(response, '<td class="field-main_performer__is_on_tour">%s</td>' % _boolean_icon(True), html=True)
         self.assertEqual(response.status_code, 200)
