@@ -11,6 +11,7 @@ env:
   - DJANGO_VERSION=django18
   - DJANGO_VERSION=django19
   - DJANGO_VERSION=django110
+  - DJANGO_VERSION=django20
   - DJANGO_VERSION=djangodev
 
 matrix:
