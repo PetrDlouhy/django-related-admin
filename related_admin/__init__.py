@@ -49,7 +49,7 @@ def getter_for_related_field(name, admin_order_field=None, short_description=Non
             f, attr, value = lookup_field(related_name, last_obj, self)
             empty_value_display = get_empty_value_display(self)
             empty_value_display = getattr(attr, 'empty_value_display', empty_value_display)
-            obj = display_for_field(obj, f, empty_value_display)
+            obj = display_for_field(value, f, empty_value_display)
         return obj
     getter.boolean = boolean
     getter.admin_order_field = admin_order_field or name
