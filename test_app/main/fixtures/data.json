@@ -2,7 +2,7 @@
     {
         "fields": {
             "first_name": "Mark",
-            "instrument": "guitair",
+            "instrument": "GUITAR",
             "active": true,
             "last_name": "Knopfler"
         },
@@ -13,7 +13,7 @@
         "fields": {
             "first_name": "Prince",
             "active": false,
-            "instrument": "voice",
+            "instrument": "VOICE",
             "last_name": null
         },
         "model": "main.musician",
