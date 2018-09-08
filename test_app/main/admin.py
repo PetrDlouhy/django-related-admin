@@ -16,11 +16,11 @@ from .models import Album, Concert, Musician
 
 
 class AlbumAdmin(RelatedFieldAdmin):
-    list_display = ('name', 'artist', 'artist__first_name', 'artist__last_name', 'artist__full_name', 'artist__active', '__str__')
+    list_display = ('name', 'artist', 'artist__first_name', 'artist__last_name', 'artist__full_name', 'artist__instrument', 'artist__active', '__str__')
 
 
 class MusicianAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name')
+    list_display = ('first_name', 'last_name', 'instrument', )
 
 
 class ConcertAdmin(RelatedFieldAdmin):
