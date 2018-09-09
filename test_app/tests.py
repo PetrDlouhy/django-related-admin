@@ -1,5 +1,6 @@
 from django.contrib.admin.templatetags.admin_list import _boolean_icon
 from django.test import RequestFactory, TestCase
+
 from test_app.main.models import INSTRUMENTS_CHOICES
 try:
     from django.urls import reverse
