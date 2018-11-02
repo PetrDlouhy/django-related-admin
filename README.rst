@@ -8,7 +8,7 @@ django-related-admin
 .. image:: https://badge.fury.io/py/django-related-admin.svg
     :target: https://badge.fury.io/py/django-related-admin
 
-Allow foreign key attributes in list_display with '__'
+Allow foreign key attributes in Django admin change list ``list_display`` with '__'
 
 This is based on `DjangoSnippet 2996 <https://djangosnippets.org/snippets/2996/>`_ which was made by Kpacn.
 
