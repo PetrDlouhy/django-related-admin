@@ -53,7 +53,7 @@ def getter_for_related_field(name, admin_order_field=None, short_description=Non
         return obj
     getter.boolean = boolean
     getter.admin_order_field = admin_order_field or name
-    getter.short_description = short_description or related_names[-1].title().replace('_', ' ')
+    getter.short_description = short_description or ' '.join(r.title().replace('_', ' ') for r in related_names)
     return getter
 
 
