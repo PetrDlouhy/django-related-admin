@@ -28,7 +28,13 @@ or from github::
     INSTALLED_APPS = (
         ...
         'related_admin',
+        'django.contrib.admin',
     )
+
+Note: Django-related-admin changes ``change_list.html`` template to disable ``white-space: nowrap;``
+css class on admin headers to allow long (posibly related) header names to wrap.
+If you want this behaviour, add the app before ``django.contrib.admin``, otherwise after.
+
 
 Usage
 -----
