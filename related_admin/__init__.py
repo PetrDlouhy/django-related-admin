@@ -23,7 +23,7 @@ def is_field_allowed(name):
 
         For example, '__str__' is not, but 'related__field' is.
     """
-    return not name.startswith('__') and not name.endswith('__') and '__' in name
+    return isinstance(name, str) and not name.startswith('__') and not name.endswith('__') and '__' in name
 
 
 def getter_for_related_field(name, admin_order_field=None, short_description=None, boolean=None):
@@ -66,7 +66,7 @@ class RelatedFieldAdminMetaclass(type(admin.ModelAdmin)):
         new_class = super(RelatedFieldAdminMetaclass, cls).__new__(cls, name, bases, attrs)
 
         for field in new_class.list_display:
-            if '__' in field[1:-1] and not hasattr(new_class, field):
+            if isinstance(field, str) and '__' in field[1:-1] and not hasattr(new_class, field):
                 setattr(new_class, field, getter_for_related_field(field))
 
         return new_class
