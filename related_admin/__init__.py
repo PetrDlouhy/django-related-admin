@@ -22,7 +22,7 @@ def is_field_allowed(name, field_filter=None):
     """
     if field_filter in ["year", "month", "week", "day", "hour", "minute", "second"]:
         return False
-    return not name.startswith('__') and not name.endswith('__') and '__' in name
+    return isinstance(name, str) and not name.startswith('__') and not name.endswith('__') and '__' in name
 
 
 def getter_for_related_field(name, admin_order_field=None, short_description=None, boolean=None):
@@ -65,7 +65,7 @@ class RelatedFieldAdminMetaclass(type(admin.ModelAdmin)):
         new_class = super(RelatedFieldAdminMetaclass, cls).__new__(cls, name, bases, attrs)
 
         for field in new_class.list_display:
-            if '__' in field[1:-1] and not hasattr(new_class, field):
+            if isinstance(field, str) and '__' in field[1:-1] and not hasattr(new_class, field):
                 setattr(new_class, field, getter_for_related_field(field))
 
         return new_class
@@ -98,14 +98,15 @@ class RelatedFieldAdmin(admin.ModelAdmin, metaclass=RelatedFieldAdminMetaclass):
         # include all related fields in queryset
         select_related = []
         for field in self.get_list_display(request):
-            split = field.rsplit('__', 1)
-            base = split[0]
-            try:
-                field_filter = split[1]
-            except IndexError:
-                field_filter = None
-            if is_field_allowed(field, field_filter):
-                select_related.append(base)
+            if isinstance(field, str):
+                split = field.rsplit('__', 1)
+                base = split[0]
+                try:
+                    field_filter = split[1]
+                except IndexError:
+                    field_filter = None
+                if is_field_allowed(field, field_filter):
+                    select_related.append(base)
 
         # explicitly add contents of self.list_select_related to select_related
         list_select_related = self.get_list_select_related(request)

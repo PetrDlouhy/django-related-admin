@@ -219,3 +219,22 @@ class RelatedFieldAdminTests(TestCase):
         admin.fake_qs.model = Set5
         admin.get_queryset(None)
         admin.fake_qs.select_related.assert_called_with('album__artist', 'album')
+
+    def test_methods_as_feilds(self):
+        """ Test, if method is used as field """
+        class Musician6(models.Model):
+            class Meta:
+                app_label = 'test'
+
+        class TestAdmin(TestRelatedFieldAdmin):
+            def get_foo(self):
+                return 'Foo'
+
+            list_display = (get_foo,)
+
+        admin = TestAdmin(Musician6, AdminSite())
+        self.assertEqual(admin.get_foo(), 'Foo')
+        self.assertEqual(admin.get_list_display(None), (TestAdmin.get_foo,))
+
+        admin.get_queryset(None)
+        admin.fake_qs.select_related.assert_called_with()
