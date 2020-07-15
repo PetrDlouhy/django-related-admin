@@ -3,15 +3,11 @@ sudo: false
 language: python
 
 python:
-  - "2.7"
   - "3.5"
   - "3.6"
   - "3.7"
 
 env:
-  - DJANGO_VERSION=django18
-  - DJANGO_VERSION=django19
-  - DJANGO_VERSION=django110
   - DJANGO_VERSION=django20
   - DJANGO_VERSION=django21
   - DJANGO_VERSION=django22
@@ -24,14 +20,7 @@ matrix:
   include:
     - python: "3.5"
       env: MODE=flake8
-  exclude:
-    - python: "2.7"
-      env: DJANGO_VERSION=django20
-    - python: "2.7"
-      env: DJANGO_VERSION=django21
-    - python: "2.7"
-      env: DJANGO_VERSION=django22
-    - python: "2.7"
+    - python: "3.5"
       env: DJANGO_VERSION=django30
 
 

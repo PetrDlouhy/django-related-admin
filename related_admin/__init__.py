@@ -9,12 +9,8 @@ for Django 1.5 where __metaclass__ is deprecated
 from __future__ import absolute_import
 
 from django.contrib import admin
-from django.contrib.admin.utils import lookup_field
+from django.contrib.admin.utils import display_for_field, lookup_field
 from django.db import models
-
-from six import with_metaclass
-
-from .compat import display_for_field, get_empty_value_display
 
 
 def is_field_allowed(name, field_filter=None):
@@ -49,7 +45,7 @@ def getter_for_related_field(name, admin_order_field=None, short_description=Non
             obj = obj()
         elif isinstance(last_obj, models.Model):
             f, attr, value = lookup_field(related_name, last_obj, self)
-            empty_value_display = get_empty_value_display(self)
+            empty_value_display = self.get_empty_value_display()
             empty_value_display = getattr(attr, 'empty_value_display', empty_value_display)
             obj = display_for_field(value, f, empty_value_display)
         return obj
@@ -74,7 +70,7 @@ class RelatedFieldAdminMetaclass(type(admin.ModelAdmin)):
         return new_class
 
 
-class RelatedFieldAdmin(with_metaclass(RelatedFieldAdminMetaclass, admin.ModelAdmin)):
+class RelatedFieldAdmin(admin.ModelAdmin, metaclass=RelatedFieldAdminMetaclass):
     """
         Version of ModelAdmin that can use related fields in list_display, e.g.:
         list_display = ('address__city', 'address__country__country_code')
@@ -91,10 +87,7 @@ class RelatedFieldAdmin(with_metaclass(RelatedFieldAdminMetaclass, admin.ModelAd
                 field = model._meta.get_field(field_name)
             except models.FieldDoesNotExist:
                 continue
-            try:
-                remote_field = field.remote_field
-            except AttributeError:  # for Django<1.9
-                remote_field = field.rel
+            remote_field = field.remote_field
             if isinstance(remote_field, models.ManyToOneRel):
                 select_related.append(field_name)
 
@@ -114,10 +107,7 @@ class RelatedFieldAdmin(with_metaclass(RelatedFieldAdminMetaclass, admin.ModelAd
                 select_related.append(base)
 
         # explicitly add contents of self.list_select_related to select_related
-        try:
-            list_select_related = self.get_list_select_related(request)
-        except AttributeError:  # for Django<1.9
-            list_select_related = self.list_select_related
+        list_select_related = self.get_list_select_related(request)
         if list_select_related and type(list_select_related) is not bool:
             select_related += list_select_related
 

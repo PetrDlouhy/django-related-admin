@@ -59,16 +59,9 @@ MIDDLEWARE = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
-
-if django.VERSION < (1, 10):
-    MIDDLEWARE_CLASSES = MIDDLEWARE
-else:
-    session_auth_middleware = 'django.contrib.auth.middleware.SessionAuthenticationMiddleware'
-    MIDDLEWARE = tuple(m for m in MIDDLEWARE if m != session_auth_middleware)
 
 
 ROOT_URLCONF = 'test_app.urls'
