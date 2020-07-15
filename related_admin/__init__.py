@@ -17,7 +17,7 @@ from six import with_metaclass
 from .compat import display_for_field, get_empty_value_display
 
 
-def is_field_allowed(name, field_filter):
+def is_field_allowed(name, field_filter=None):
     """
         Check is field name is eligible for being split.
 
@@ -79,38 +79,14 @@ class RelatedFieldAdmin(with_metaclass(RelatedFieldAdminMetaclass, admin.ModelAd
         Version of ModelAdmin that can use related fields in list_display, e.g.:
         list_display = ('address__city', 'address__country__country_code')
     """
-    def get_queryset(self, request):
-        qs = super(RelatedFieldAdmin, self).get_queryset(request)
 
-        # include all related fields in queryset
-        select_related = []  # field.rsplit('__', 1)[0] for field in self.list_display if is_field_allowed(field)]
-        for field in self.list_display:
-            split = field.rsplit('__', 1)
-            base = split[0]
-            try:
-                field_filter = split[1]
-            except IndexError:
-                field_filter = None
-            if is_field_allowed(field, field_filter):
-                select_related.append(base)
-
-
-        print(select_related)
-
-        # explicitly add contents of self.list_select_related to select_related
-        list_select_related = self.get_list_select_related(request)
-        if list_select_related and type(list_select_related) is not bool:
-            print(list_select_related)
-            for field in list_select_related:
-                print(field)
-                select_related.append(field)
-
+    def select_related_fk(self, request, qs, select_related):
         # Include all foreign key fields in queryset.
         # This is based on ChangeList.get_query_set().
         # We have to duplicate it here because select_related() only works once.
         # Can't just use list_select_related because we might have multiple__depth__fields it won't follow.
         model = qs.model
-        for field_name in self.list_display:
+        for field_name in self.get_list_display(request):
             try:
                 field = model._meta.get_field(field_name)
             except models.FieldDoesNotExist:
@@ -122,4 +98,26 @@ class RelatedFieldAdmin(with_metaclass(RelatedFieldAdminMetaclass, admin.ModelAd
             if isinstance(remote_field, models.ManyToOneRel):
                 select_related.append(field_name)
 
-        return qs.select_related(*select_related)
+    def get_queryset(self, request):
+        qs = super(RelatedFieldAdmin, self).get_queryset(request)
+
+        # include all related fields in queryset
+        select_related = []
+        for field in self.get_list_display(request):
+            split = field.rsplit('__', 1)
+            base = split[0]
+            try:
+                field_filter = split[1]
+            except IndexError:
+                field_filter = None
+            if is_field_allowed(field, field_filter):
+                select_related.append(base)
+
+        # explicitly add contents of self.list_select_related to select_related
+        list_select_related = self.get_list_select_related(request)
+        if list_select_related and type(list_select_related) is not bool:
+            select_related += list_select_related
+
+        self.select_related_fk(request, qs, select_related)
+        qs.select_related(*select_related)
+        return qs
