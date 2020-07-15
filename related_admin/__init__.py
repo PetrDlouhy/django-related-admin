@@ -114,7 +114,10 @@ class RelatedFieldAdmin(with_metaclass(RelatedFieldAdminMetaclass, admin.ModelAd
                 select_related.append(base)
 
         # explicitly add contents of self.list_select_related to select_related
-        list_select_related = self.get_list_select_related(request)
+        try:
+            list_select_related = self.get_list_select_related(request)
+        except AttributeError:  # for Django<1.9
+            list_select_related = self.list_select_related
         if list_select_related and type(list_select_related) is not bool:
             select_related += list_select_related
 
