@@ -17,12 +17,14 @@ from six import with_metaclass
 from .compat import display_for_field, get_empty_value_display
 
 
-def is_field_allowed(name):
+def is_field_allowed(name, field_filter):
     """
         Check is field name is eligible for being split.
 
         For example, '__str__' is not, but 'related__field' is.
     """
+    if field_filter in ["year", "month", "week", "day", "hour", "minute", "second"]:
+        return False
     return not name.startswith('__') and not name.endswith('__') and '__' in name
 
 
@@ -81,11 +83,26 @@ class RelatedFieldAdmin(with_metaclass(RelatedFieldAdminMetaclass, admin.ModelAd
         qs = super(RelatedFieldAdmin, self).get_queryset(request)
 
         # include all related fields in queryset
-        select_related = [field.rsplit('__', 1)[0] for field in self.list_display if is_field_allowed(field)]
+        select_related = []  # field.rsplit('__', 1)[0] for field in self.list_display if is_field_allowed(field)]
+        for field in self.list_display:
+            split = field.rsplit('__', 1)
+            base = split[0]
+            try:
+                field_filter = split[1]
+            except IndexError:
+                field_filter = None
+            if is_field_allowed(field, field_filter):
+                select_related.append(base)
+
+
+        print(select_related)
 
         # explicitly add contents of self.list_select_related to select_related
-        if self.list_select_related:
-            for field in self.list_select_related:
+        list_select_related = self.get_list_select_related(request)
+        if list_select_related and type(list_select_related) is not bool:
+            print(list_select_related)
+            for field in list_select_related:
+                print(field)
                 select_related.append(field)
 
         # Include all foreign key fields in queryset.
