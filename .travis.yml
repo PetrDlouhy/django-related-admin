@@ -20,6 +20,9 @@ matrix:
   include:
     - python: "3.5"
       env: MODE=flake8
+  exclude:
+    - python: "3.5"
+      env: DJANGO_VERSION=djangodev
     - python: "3.5"
       env: DJANGO_VERSION=django30
 
