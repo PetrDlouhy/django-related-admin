@@ -10,6 +10,7 @@ from __future__ import absolute_import
 
 from django.contrib import admin
 from django.contrib.admin.utils import display_for_field, lookup_field
+from django.core import exceptions
 from django.db import models
 
 
@@ -85,7 +86,7 @@ class RelatedFieldAdmin(admin.ModelAdmin, metaclass=RelatedFieldAdminMetaclass):
         for field_name in self.get_list_display(request):
             try:
                 field = model._meta.get_field(field_name)
-            except models.FieldDoesNotExist:
+            except exceptions.FieldDoesNotExist:
                 continue
             remote_field = field.remote_field
             if isinstance(remote_field, models.ManyToOneRel):
