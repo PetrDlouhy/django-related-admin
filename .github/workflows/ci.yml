@@ -1,0 +1,72 @@
+name: Django Related Admin CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+        django-version: [django20, django21, django22, django30, django31, django32, django40, django41, django42, djangodev]
+
+        exclude:
+          - python-version: "3.7"
+            django-version: django40
+          - python-version: "3.7"
+            django-version: django41
+          - python-version: "3.7"
+            django-version: django42
+          - python-version: "3.7"
+            django-version: djangodev
+          - python-version: "3.8"
+            django-version: djangodev
+          - python-version: "3.9"
+            django-version: djangodev
+          - python-version: "3.10"
+            django-version: djangodev
+          - python-version: "3.10"
+            django-version: django20
+          - python-version: "3.11"
+            django-version: django20
+          - python-version: "3.11"
+            django-version: django21
+          - python-version: "3.11"
+            django-version: django22
+          - python-version: "3.11"
+            django-version: django30
+          - python-version: "3.11"
+            django-version: django31
+          - python-version: "3.11"
+            django-version: djangodev
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        pip install tox codecov
+    - name: Run tests
+      run: |
+        coverage erase
+        tox -e py${{ matrix.python-version }}-${{ matrix.django-version }}
+    - name: Upload coverage to Codecov
+      run: codecov
+
+  flake8:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        pip install tox coveralls
+    - name: Run flake8
+      run: tox -e flake8
