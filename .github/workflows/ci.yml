@@ -56,6 +56,8 @@ jobs:
         tox -e py${{ matrix.python-version }}-${{ matrix.django-version }}
     - name: Upload coverage to Codecov
       run: codecov
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   flake8:
     runs-on: ubuntu-latest
