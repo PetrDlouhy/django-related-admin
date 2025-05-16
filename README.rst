@@ -1,12 +1,17 @@
 ====================
 django-related-admin
 ====================
-.. image:: https://travis-ci.org/PetrDlouhy/django-related-admin.svg?branch=master
-    :target: https://travis-ci.org/PetrDlouhy/django-related-admin
 .. image:: https://coveralls.io/repos/github/PetrDlouhy/django-related-admin/badge.svg?branch=master
 	 :target: https://coveralls.io/github/PetrDlouhy/django-related-admin?branch=master
 .. image:: https://badge.fury.io/py/django-related-admin.svg
     :target: https://badge.fury.io/py/django-related-admin
+
+.. warning::
+   **DEPRECATION WARNING**
+   
+   `django-related-admin` is no longer needed for modern Django projects!  
+   As of Django 5.1+, double-underscore lookups in `list_display` are natively supported.  
+   You should remove this package from your project and use the built-in Django admin functionality instead.
 
 Allow foreign key attributes in Django admin change list ``list_display`` with '__'
 
